@@ -1,0 +1,91 @@
+{
+  "name": "brood",
+  "displayName": "Brood",
+  "description": "Brood language support for VS Code — syntax highlighting plus full IntelliSense via the brood-lsp language server.",
+  "version": "0.1.0",
+  "publisher": "broodlang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/broodlang/brood-vscode"
+  },
+  "engines": {
+    "vscode": "^1.82.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "brood",
+    "lisp",
+    "blsp"
+  ],
+  "activationEvents": [
+    "onLanguage:brood"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "brood",
+        "aliases": [
+          "Brood",
+          "brood"
+        ],
+        "extensions": [
+          ".blsp"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "brood",
+        "scopeName": "source.brood",
+        "path": "./syntaxes/brood.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "Brood",
+      "properties": {
+        "brood.lsp.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run the brood-lsp language server (completion, hover, diagnostics, go-to-definition, rename, semantic tokens, formatting). Disable to use syntax highlighting only."
+        },
+        "brood.lsp.path": {
+          "type": "string",
+          "default": "brood-lsp",
+          "description": "Path to the brood-lsp binary. Defaults to 'brood-lsp' on your PATH; point it at a build (e.g. ~/src/broodlang/brood/target/release/brood-lsp) during development."
+        },
+        "brood.lsp.args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra command-line arguments passed to the brood-lsp binary."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "brood.restartServer",
+        "title": "Brood: Restart Language Server"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@types/vscode": "^1.82.0",
+    "typescript": "^5.4.0"
+  }
+}
