@@ -73,3 +73,13 @@ The grammar is intentionally small — keywords, `def…` heads, special forms,
 the precise, namespace-aware colouring. (This is *not* a tree-sitter grammar:
 VS Code highlights with TextMate grammars. A separate `tree-sitter-brood` would
 serve Neovim/Helix/Zed/Emacs and GitHub.)
+
+**`syntaxes/brood.tmLanguage.json` is generated** from the language's own
+`(special-forms)` (ADR-092), not hand-maintained — regenerate it from the brood repo:
+
+```sh
+nest grammar > ~/src/broodlang/brood-vscode/syntaxes/brood.tmLanguage.json
+```
+
+A new special form belongs in the kernel's `SPECIAL_FORMS`, after which every editor
+(this extension via `nest grammar`, Emacs via `nest grammar emacs`) regenerates in sync.
