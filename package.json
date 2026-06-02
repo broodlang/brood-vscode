@@ -76,9 +76,10 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "vscode:prepublish": "npm run check-types && node esbuild.js --production",
+    "compile": "npm run check-types && node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "check-types": "tsc --noEmit -p ./"
   },
   "dependencies": {
     "vscode-languageclient": "^9.0.1"
@@ -86,6 +87,7 @@
   "devDependencies": {
     "@types/node": "^18.19.0",
     "@types/vscode": "^1.82.0",
+    "esbuild": "^0.28.0",
     "typescript": "^5.4.0"
   }
 }
