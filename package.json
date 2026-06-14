@@ -36,6 +36,17 @@
           ".blsp"
         ],
         "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "bml",
+        "aliases": [
+          "BML",
+          "bml"
+        ],
+        "extensions": [
+          ".bml"
+        ],
+        "configuration": "./bml-language-configuration.json"
       }
     ],
     "grammars": [
@@ -43,6 +54,14 @@
         "language": "brood",
         "scopeName": "source.brood",
         "path": "./syntaxes/brood.tmLanguage.json"
+      },
+      {
+        "language": "bml",
+        "scopeName": "source.bml",
+        "path": "./syntaxes/bml.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.brood.bml": "brood"
+        }
       }
     ],
     "configuration": {
