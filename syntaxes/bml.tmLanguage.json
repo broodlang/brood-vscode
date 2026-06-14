@@ -3,6 +3,9 @@
   "name": "BML",
   "patterns": [
     { "include": "#comment" },
+    { "include": "#style-element" },
+    { "include": "#script-element" },
+    { "include": "#component" },
     { "include": "#interpolation" },
     { "include": "#tag" }
   ],
@@ -11,6 +14,57 @@
       "name": "comment.block.bml",
       "begin": "<!--",
       "end": "-->"
+    },
+    "style-element": {
+      "comment": "Raw-text <style>: content is CSS, not markup — no interpolation.",
+      "begin": "(<)(style)\\b",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.bml" },
+        "2": { "name": "entity.name.tag.bml" }
+      },
+      "end": "(</)(style)\\s*(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.bml" },
+        "2": { "name": "entity.name.tag.bml" },
+        "3": { "name": "punctuation.definition.tag.end.bml" }
+      },
+      "patterns": [
+        { "begin": ">", "end": "(?=</style)", "patterns": [{ "include": "source.css" }] },
+        { "include": "#attribute" }
+      ]
+    },
+    "script-element": {
+      "comment": "Raw-text <script>: content is JS, not markup — no interpolation.",
+      "begin": "(<)(script)\\b",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.bml" },
+        "2": { "name": "entity.name.tag.bml" }
+      },
+      "end": "(</)(script)\\s*(>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.bml" },
+        "2": { "name": "entity.name.tag.bml" },
+        "3": { "name": "punctuation.definition.tag.end.bml" }
+      },
+      "patterns": [
+        { "begin": ">", "end": "(?=</script)", "patterns": [{ "include": "source.js" }] },
+        { "include": "#attribute" }
+      ]
+    },
+    "component": {
+      "comment": "Component tags <.name …>/</.name> compile to function calls.",
+      "begin": "(</?\\.)([a-zA-Z][a-zA-Z0-9/_-]*)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.bml" },
+        "2": { "name": "entity.name.type.component.bml" }
+      },
+      "end": "(/?>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.bml" }
+      },
+      "patterns": [
+        { "include": "#attribute" }
+      ]
     },
     "assign": {
       "comment": "@name — BML shorthand for (get model :name); a Brood symbol the brood grammar leaves unscoped, so highlight it here.",
