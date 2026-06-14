@@ -1,0 +1,83 @@
+{
+  "scopeName": "source.bml",
+  "name": "BML",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#interpolation" },
+    { "include": "#tag" }
+  ],
+  "repository": {
+    "comment": {
+      "name": "comment.block.bml",
+      "begin": "<!--",
+      "end": "-->"
+    },
+    "assign": {
+      "comment": "@name — BML shorthand for (get model :name); a Brood symbol the brood grammar leaves unscoped, so highlight it here.",
+      "match": "@[A-Za-z_][A-Za-z0-9_?!-]*",
+      "name": "variable.language.assign.bml"
+    },
+    "interpolation": {
+      "name": "meta.embedded.brood.bml",
+      "begin": "\\{",
+      "beginCaptures": {
+        "0": { "name": "punctuation.section.interpolation.begin.bml" }
+      },
+      "end": "\\}",
+      "endCaptures": {
+        "0": { "name": "punctuation.section.interpolation.end.bml" }
+      },
+      "patterns": [
+        { "include": "#assign" },
+        { "include": "#nested-braces" },
+        { "include": "source.brood" }
+      ]
+    },
+    "nested-braces": {
+      "comment": "A Brood map literal inside an interpolation — consume its own braces so the outer interpolation isn't closed early.",
+      "begin": "\\{",
+      "end": "\\}",
+      "patterns": [
+        { "include": "#assign" },
+        { "include": "#nested-braces" },
+        { "include": "source.brood" }
+      ]
+    },
+    "tag": {
+      "begin": "(</?)([a-zA-Z][a-zA-Z0-9-]*)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.tag.begin.bml" },
+        "2": { "name": "entity.name.tag.bml" }
+      },
+      "end": "(/?>)",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.tag.end.bml" }
+      },
+      "patterns": [
+        { "include": "#attribute" }
+      ]
+    },
+    "attribute": {
+      "patterns": [
+        {
+          "name": "keyword.control.directive.bml",
+          "match": ":(?:if|for)(?=\\s*=)"
+        },
+        {
+          "name": "entity.other.attribute-name.bml",
+          "match": "[a-zA-Z_:][a-zA-Z0-9_:.-]*"
+        },
+        { "include": "#string" },
+        { "include": "#interpolation" }
+      ]
+    },
+    "string": {
+      "name": "string.quoted.double.bml",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        { "include": "#interpolation" }
+      ]
+    }
+  }
+}
