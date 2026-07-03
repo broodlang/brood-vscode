@@ -83,3 +83,8 @@ nest grammar > ~/src/broodlang/brood-vscode/syntaxes/brood.tmLanguage.json
 
 A new special form belongs in the kernel's `SPECIAL_FORMS`, after which every editor
 (this extension via `nest grammar`, Emacs via `nest grammar emacs`) regenerates in sync.
+
+## License
+
+Licensed under the MIT License; see [`LICENSE`](LICENSE).
+Copyright © 2026 Wilhelm Kirschbaum.
