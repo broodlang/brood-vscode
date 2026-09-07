@@ -49,6 +49,17 @@
         "configuration": "./bml-language-configuration.json"
       }
     ],
+    "semanticTokenScopes": [
+      {
+        "language": "brood",
+        "scopes": {
+          "string.documentation": [
+            "comment.block.documentation.brood",
+            "comment.block.documentation"
+          ]
+        }
+      }
+    ],
     "grammars": [
       {
         "language": "brood",

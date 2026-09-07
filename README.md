@@ -15,7 +15,9 @@ language intelligence comes from the server — the same one the Emacs package
 - hover docs and signature help
 - go-to-definition, find-references, document/workspace symbols
 - rename, document highlight
-- **semantic tokens** (namespace-aware colouring on top of the TextMate grammar)
+- **semantic tokens** (namespace-aware colouring on top of the TextMate grammar,
+  and the one place a **docstring** is told from a string value exactly — the
+  grammar approximates it, the server parses it)
 - formatting (delegated to Brood's `std/format.blsp` — byte-identical to `nest format`)
 - code actions (did-you-mean, remove-unused-`require`), folding ranges, inlay hints
 
@@ -69,8 +71,12 @@ server after a rebuild.
   the server's semantic tokens refine it).
 
 The grammar is intentionally small — keywords, `def…` heads, special forms,
-`:keywords`, constants, numbers, strings, comments — because the server provides
-the precise, namespace-aware colouring. (This is *not* a tree-sitter grammar:
+`:keywords`, constants, numbers, strings, docstrings, comments — because the
+server provides the precise, namespace-aware colouring. (Both the grammar and
+the extension's `semanticTokenScopes` map a docstring onto
+`comment.block.documentation`, so it is coloured as documentation with or
+without the server; only the server can see that the lone string in
+`(defn f (x) "hi")` is a return value rather than a doc.) (This is *not* a tree-sitter grammar:
 VS Code highlights with TextMate grammars. A separate `tree-sitter-brood` would
 serve Neovim/Helix/Zed/Emacs and GitHub.)
 
